@@ -305,7 +305,7 @@ avgz <- function(x){
   a<-mean(x$zscores)
   b<-sd(x$zscores)
   v<-c(a,b)
-}
+# }
 
 #apply the function to the list of objects
 
