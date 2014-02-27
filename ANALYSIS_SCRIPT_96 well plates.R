@@ -231,6 +231,26 @@ rownames(results)<- c(levels(filtered$Plasmid))
 write.table(results, "Output_Results_plasmid.txt", row.names=FALSE, sep="\t")
 
 
+#How do I create a matrix that reports for each 
+#plasmid conditions the average across each measured feature?
+mat_vec<-c()
+
+for(i in levels(filtered$Plasmid)) {
+  cells_i<-subset(filtered, Plasmid == i)
+  vec<-c(i, sapply(cells_i[,9:37], mean))
+  mat_vec<-rbind(mat_vec, vec, deparse.level=0)
+}
+head(mat_vec)
+
+write.table(mat_vec, "Output_Allfeatures_vectors.txt", row.names=FALSE, sep="\t")
+
+
+
+
+#STOP HERE FOR 96-WELL PLATES!!!!!!!
+#STOP HERE FOR 96-WELL PLATES!!!!!!!
+#STOP HERE FOR 96-WELL PLATES!!!!!!!
+#STOP HERE FOR 96-WELL PLATES!!!!!!!
 
 
 
@@ -239,26 +259,9 @@ write.table(results, "Output_Results_plasmid.txt", row.names=FALSE, sep="\t")
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-#CALCULATING Z-SCORES
+#CALCULATING Z-SCORES - This part does not apply to this kind of plates since it's hard to get to 100 cells
+#per well, even with the high transfection efficiency I have.
+#But I'll leave it in, just don't use it
 
 results_m<-data.frame(results)
 
@@ -290,6 +293,9 @@ write.table(results_fin, "Output_Results_Z.txt", row.names=FALSE, sep="\t")
 ?rowMeans
 
 #Make a list of results divided by Plasmid
+#THE SPLIT FUNCTION IS VERY USEFUL!!!
+#THE SPLIT FUNCTION IS VERY USEFUL!!!
+#THE SPLIT FUNCTION IS VERY USEFUL!!!
 
 splitresults <- split(results_fin, results_fin$Plasmid)
 splitresults
@@ -312,6 +318,9 @@ write.table(avg_sd_matrix, "Output_Zscores_results.txt", sep="\t")
 #avg_sd_noempty<-avg_sd_matrix[!rownames(avg_sd_matrix) %in% Nopl,]
 #avg_sd_noempty
 
+#THIS PART SETS THE PARAMETERS FOR THE GRAPHICAL OUTPUT
+#UPPER AND LOWER BOUNDARIES OF THE GRAPHS,
+#FIRST SET AS VECTORS TO BE FED TO THE BARPLOT FUNCTION!!!
 
 upper<-c(avg_sd_matrix[1,1]+avg_sd_matrix[1,2], avg_sd_matrix[2,1]+avg_sd_matrix[2,2], avg_sd_matrix[3,1]+avg_sd_matrix[3,2],
          avg_sd_matrix[4,1]+avg_sd_matrix[4,2], avg_sd_matrix[5,1]+avg_sd_matrix[5,2], avg_sd_matrix[6,1]+avg_sd_matrix[6,2],
