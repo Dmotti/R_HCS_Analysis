@@ -244,6 +244,29 @@ head(mat_vec)
 
 write.table(mat_vec, "Output_Allfeatures_vectors.txt", row.names=FALSE, sep="\t")
 
+#LEt's normalize to the anti-Luc
+#First I remove the name column
+
+numonly<-mat_vec[,-1]
+
+#Now we have to transform the values into pure numbers (numeric)
+
+numonly2<-t(as.matrix(apply(numonly, 1, as.numeric)))
+
+#Now I normalize to the first line
+#The Ts are needed because the /function transposes things, for whatever reason...
+
+norm_vec<-t(t(numonly2)/(numonly2[1,]))
+#Give names to columns and rows:
+
+colnames(norm_vec)<-colnames(numonly)
+head(norm_vec)
+norm_vec<-cbind(mat_vec[,1], norm_vec)
+
+write.table(norm_vec, "Output_Allfeatures_vectors_norm.txt", row.names=FALSE, sep="\t")
+
+
+
 
 
 
